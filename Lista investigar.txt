@@ -1,0 +1,5 @@
+APR: https://teams.microsoft.com/l/meetup-join/19%3af8cd429683bb4980977c781ee6c292d3%40thread.tacv2/1599994362082?context=%7b%22Tid%22%3a%22be4655df-ac73-401f-a7ae-198c3b72d0c6%22%2c%22Oid%22%3a%22ec087e36-beea-46c6-a77f-e26ec464cb2f%22%7d
+TIA: https://teams.microsoft.com/l/meetup-join/19%3a384f8ab5dd3541cdb99335d0ecf1eae8%40thread.tacv2/1599822480417?context=%7b%22Tid%22%3a%22be4655df-ac73-401f-a7ae-198c3b72d0c6%22%2c%22Oid%22%3a%22af9ffb0f-f8ab-49e3-b104-cbaf1caf54a9%22%7d
+ALM: alt
+SGI
+PDL: lppl
