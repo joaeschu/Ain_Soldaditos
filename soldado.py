@@ -40,18 +40,61 @@ class comandante(BDITroop):
             return l[:i]
             
     #funcion para calcular las posiciones de los defensores
-    @actions.add_function(".calcula", (tuple, tuple))
-    def _calcula(PosBan,lisPos):
-        lista=lisPos
-        i=0
-        lista[0][0]+=0
-        lista[0][2]+=20
-        lista[1][0]+=(-17.3)
-        lista[1][2]+=(-10)
-        lista[2][0]+=(17.3)
-        lista[2][2]+=(-10)       
-        return tuple(lista)
+    @actions.add_function(".pDefensiva", (tuple, ))
+    def _pDefensiva(posBan):
+       
+       #Vamos a calcular cuatro posiciones alrededor de la bandera. 
+       #Tienen que estar a una distancia entre ellos que les permita tener un buen rango de visi?n y acudir en ayuda del otro r?pidamente.
+       #Si hay muros y no se puede estar a la distancia idea, esta se reducir?.
+       
+        fx, fy, fz = posBan
+        
+        #Distancia base entre soldados
+        dist = 25
+        
+        # Posici?n arriba a la izquierda
+        i = 0
+        x = fX - dist
+        z = fZ + dist
+        while not self.map.can_walk(x,z):
+            x = fX - dist + i
+            z = fZ + dist - i
+            i += 1
+        pos1 = (x, 0, z)    
 
+        i = 0
+        # Posici?n arriba a la derecha
+        x = fX + dist
+        z = fZ + dist
+        while not self.map.can_walk(x,z):
+            x = fX + dist - i
+            z = fZ + dist - i
+            i += 1
+        pos2 = (x, 0, z) 
+
+        i = 0
+        # Posici?n abajo a la izquierda
+        x = fX - dist
+        z = fZ - dist
+        while not self.map.can_walk(x,z):
+            x = fX - dist + i
+            z = fZ - dist + i
+            i += 1
+        pos4 = (x, 0, z) 
+
+        i = 0
+        # Posici?n abajo a la derecha
+        x = fX + dist
+        z = fZ - dist
+        while not self.map.can_walk(x,z):
+            x = fX + dist - i
+            z = fZ - dist + i
+            i += 1
+        pos3 = (x, 0, z) 
+
+        return (pos1, pos2, pos3, pos4)
+        
+        
     
 
 
