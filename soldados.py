@@ -38,9 +38,19 @@ class BDIGeneral(BDITroop):
         #si esta al final, solo se quita el ultimo
         elif i == (len(l) - 1):
             return l[:i]
-    
-        
-        
+            
+    #funcion para calcular las posiciones de los defensores
+    @actions.add_function(".calcula", (tuple, tuple))
+    def _calcula(PosBan,lisPos):
+        lista=lisPos
+        i=0
+        lista[0][0]+=0
+        lista[0][2]+=20
+        lista[1][0]+=(-17.3)
+        lista[1][2]+=(-10)
+        lista[2][0]+=(17.3)
+        lista[2][2]+=(-10)       
+        return tuple(lista)
 
     
 

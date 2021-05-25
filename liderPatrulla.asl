@@ -7,15 +7,15 @@
 	.get_service("comandante").
 
 /*espera que le asigne su patrulla el comandante*/
-+comandante(G)
++comandante(C)
 	<-
-	.send(G,tell,solPatrulla).
+	.send(C,tell,solPatrulla).
 	
 /*El comandante le manda su patrulla*/
 +respPatrulla([L1,L2])[source(G)]
 	<-
 	.send(L1,tell,sigueme);
-	+miFieldOps(L1);
+	+miFieldops(L1);
 	.send(L2,tell,sigueme);
 	+miMedico(L2);
 	.wait(1000);
@@ -26,7 +26,7 @@
 +crea_puntos
 	<-
 	?flag(Pos);
-	.create_control_points(Pos,75,4,C);
+	.create_control_points(Pos,100,4,C);
 	+control_points(C);
 	.length(C,L);
 	+total_control_points(L);
