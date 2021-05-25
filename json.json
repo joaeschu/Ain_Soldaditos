@@ -1,0 +1,47 @@
+{
+    "host": "gtirouter.dsic.upv.es",
+    "manager": "tocalom",
+    "manager_password": "secret",
+    "service": "tocalos",
+    "service_password": "secret",
+    "axis": [
+		{
+            "rank": "BDISoldier",
+            "name": "lider",
+            "password": "secret",
+            "amount": 2,
+            "asl": "liderPatrulla.asl",
+			"python": "soldado.py"
+        },
+        {
+            "rank": "BDIMedic",
+            "name": "medico",
+            "password": "secret",
+			"amount": 2,
+			"python": "soldado.py"
+        },
+         {
+            "rank": "BDIFieldOp",
+            "name": "Fieldop",
+            "password": "secret",
+			"amount": 2,
+			"python": "soldado.py"
+        },
+		{
+            "rank": "soldado.comandante.BDISoldier",
+            "name": "comandante",
+            "password": "secret",
+            "asl": "comandante.asl",
+			"python": "soldado.py"
+        },
+		{
+            "rank": "BDISoldier",
+            "name": "defensor",
+            "password": "secret",
+            "asl": "defensor.asl",
+			"amount": 3,
+			"python": "soldado.py"
+        }
+    
+   ]
+  }

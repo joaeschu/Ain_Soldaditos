@@ -1,19 +1,21 @@
 
 /* Creencia que se dispara cuando se inicia la partida */
-+flag(F): team(200)
++flag(F)
 	<-
-	.wait(100)
+	.wait(100);
 	.register_service("lider_patrulla");
 	.get_service("comandante").
 
 /*espera que le asigne su patrulla el comandante*/
 +comandante(C)
 	<-
-	.send(C,tell,solPatrulla).
+	.print("pido mi escuadrón");
+	.send(C,tell,solPatrulla(1)).
 	
 /*El comandante le manda su patrulla*/
 +respPatrulla([L1,L2])[source(G)]
 	<-
+	.print("el comandante me da mi escuadron");
 	.send(L1,tell,sigueme);
 	+miFieldops(L1);
 	.send(L2,tell,sigueme);
