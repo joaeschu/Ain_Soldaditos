@@ -12,16 +12,15 @@
 /*Coge a los 3 defensores y los reparte en torno a la bandera*/
 +defensor([D1,D2,D3])
 	<-
-	?flag(Pos);
+	?flag([X,Y,Z]);
 	.print("Conozco a mis 3 defensores, les digo donde ir");
-	.calcula(Pos,[P1,P2,P3],[PD1,PD2,PD3]);
-	.send(D1,tell,posicion_defensa(PD1));
-	.send(D2,tell,posicion_defensa(PD2));
-	.send(D3,tell,posicion_defensa(PD3)).
+	.send(D1,tell,posicion_defensa([X,Y,Z+20]));
+	.send(D2,tell,posicion_defensa([X-17.3,Y,Z-10]));
+	.send(D3,tell,posicion_defensa([X+17.3,Y,Z-10])).
 	
 /*Cuando recibe una solicitud de patrulla del lider de escuadrón L, 
 le manda los integrantes de su patrulla*/
-+solPatrulla(_)[source(L)]
++solPatrulla[source(L)]
 	<-
 	.print("le mando el escuadrón a: ",L);
 	?myMedics(M);

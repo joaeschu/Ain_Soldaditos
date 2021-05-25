@@ -13,22 +13,9 @@
             "asl": "liderPatrulla.asl",
 			"python": "soldado.py"
         },
-        {
-            "rank": "BDIMedic",
-            "name": "medico",
-            "password": "secret",
-			"amount": 2,
-			"python": "soldado.py"
-        },
-         {
-            "rank": "BDIFieldOp",
-            "name": "Fieldop",
-            "password": "secret",
-			"amount": 2,
-			"python": "soldado.py"
-        },
+        
 		{
-            "rank": "soldado.comandante.BDISoldier",
+            "rank": "soldado.comandante",
             "name": "comandante",
             "password": "secret",
             "asl": "comandante.asl",
@@ -43,5 +30,13 @@
 			"python": "soldado.py"
         }
     
+   ],
+   "allied": [
+		{
+            "rank": "BDIMedic",
+            "name": "medico",
+            "password": "secret"
+			
+        }
    ]
   }

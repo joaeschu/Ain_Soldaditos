@@ -2,15 +2,15 @@
 /* Creencia que se dispara cuando se inicia la partida */
 +flag(F)
 	<-
-	.wait(100);
 	.register_service("lider_patrulla");
+	.wait(500);
 	.get_service("comandante").
 
 /*espera que le asigne su patrulla el comandante*/
-+comandante(C)
++comandante([C])
 	<-
 	.print("pido mi escuadrón");
-	.send(C,tell,solPatrulla(1)).
+	.send(C,tell,solPatrulla).
 	
 /*El comandante le manda su patrulla*/
 +respPatrulla([L1,L2])[source(G)]
