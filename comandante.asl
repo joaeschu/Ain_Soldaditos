@@ -9,7 +9,7 @@
 	.get_service("defensor");
 	.goto(F).
 	
-/*Coge a los 4 defensores y los reparte en torno a la bandera*/
+/*Coge a los 3 defensores y los reparte en torno a la bandera*/
 +defensor(D)
 	<-
 	?flag(F);
@@ -23,14 +23,14 @@
     .send(Sold, tell, posicion_defensa(P1));
     .print("Ahora",Sold," es defensor.");
     -+i(I+1);
-  }
-	
+	}
+	.print("fin de asignacion").
 	
 /*Cuando recibe una solicitud de patrulla del lider de escuadrón L, 
 le manda los integrantes de su patrulla*/
 +solPatrulla[source(L)]
 	<-
-	.print("le mando el escuadrón a: ",L);
+	.print("le mando el escuadron a: ",L);
 	?myMedics(M);
 	?myFieldops(F);
 	.nth(0,F,FL);
