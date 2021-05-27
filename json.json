@@ -16,13 +16,15 @@
             "rank": "BDIMedic",
             "name": "medico",
             "password": "secret",
-			"amount": 2
+			"amount": 2,
+			"asl": "med.asl"
         },
 		{
             "rank": "BDIFieldOp",
             "name": "fieldop",
             "password": "secret",
-			"amount": 2
+			"amount": 2,
+			"asl": "fo.asl"
         },
 		{
             "rank": "soldado.comandante",

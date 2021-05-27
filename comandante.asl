@@ -14,7 +14,7 @@
 	<-
 	?flag(F);
 	.print("Conozco a mis 4 defensores, les digo donde ir");
-	.pDefensiva(F, Po);
+	#.pDefensiva(F, Po);
 	while(i(I) & I < 4) {
     .nth(I,Po, P1);
     .print("Punto ",I, ": ", P1);
@@ -37,7 +37,7 @@ le manda los integrantes de su patrulla*/
 	.quitar(0,F,F2);
 	.nth(0,M,ML);
 	.quitar(0,M,M2);
-	.send(L,tell,respPatrulla[FL,ML]);
+	.send(L,tell,respPatrulla([FL,ML]));
 	-+myFieldops(F2);
 	-+myMedics(M2).
 	
