@@ -14,7 +14,7 @@
 	<-
 	?flag(F);
 	.print("Conozco a mis 4 defensores, les digo donde ir");
-	#.pDefensiva(F, Po);
+	.pDefensiva(F, Po);
 	while(i(I) & I < 4) {
     .nth(I,Po, P1);
     .print("Punto ",I, ": ", P1);
