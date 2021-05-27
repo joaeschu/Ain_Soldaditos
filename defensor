@@ -1,15 +1,14 @@
 
 /* Creencia que se dispara cuando se inicia la partida */
-+flag(F)
++flag(F): team(200)
 	<-
-	.register_service("defensor");
-	.wait(500);
+	.register_service("defensa");
+	.wait(100);
 	.get_service("comandante").
 
 +posicion_defensa(Pos)[source(C)]
 	<-
-	.print("Tengo que ir a: ", Pos);
-	.goto(Pos).
+	.goto(pos).
 
 
 
