@@ -16,11 +16,11 @@
 +respPatrulla([L1,L2])[source(C)]
 	<-
 	.print("el comandante me da mi escuadron");
-	+crea_puntos;
 	+miFieldops(L1);
 	.send(L1,tell,medico(L2));
 	+miMedico(L2);
 	.send(L2,tell,fieldop(L1));
+	+crea_puntos;
 	+pedir_seguimiento([L1,L2]).
 	
 +pedir_seguimiento([L1,L2])
@@ -44,6 +44,10 @@
 	<-
 	?control_points(C);
 	.nth(P,C,A);
+	?miFieldops(L1);
+	?miMedico(L2);
+	.send(L1,tell,sigueme(A));
+	.send(L2,tell,sigueme(A));
 	.goto(A).
 
 +patrulla(P): total_control_points(T) & P==T

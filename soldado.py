@@ -94,7 +94,7 @@ class comandante(BDITroop):
 
             return (pos1, pos2, pos3, pos4)
         
-            @actions.add_function(".banderaCogida", ())
+        @actions.add_function(".banderaCogida", ())
         def _banderaCogida():
         
             #Devuelve 1 si la bandera esta en manos del enemigo        

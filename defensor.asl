@@ -10,23 +10,18 @@
 +lider_patrulla(L)
 	<-
 	+lideres(L).
-	
-+defensor(LD)
-	<-
-	+defensores(LD).
 
 +posicion_defensa(Pos)[source(C)]
 	<-
 	.print("Tengo que ir a: ", Pos);
 	.goto(Pos).
 
-+enemies_in_fov(_,_,_,_,_,P): not peligro
++enemies_in_fov(ID,Type,Angle,Distance,Health,Position): not peligro
 	<-
 	+peligro;
 	?position(Pos);
-	?defensores(D);
 	?lideres(L);
-	.send(D,tell,peligro_en(P));
+	.send(L,tell,peligro_en(Position));
 	.send(L,tell,venid(Pos)).
 
 	
