@@ -6,37 +6,46 @@
     "service_password": "secret",
     "axis": [
 		{
-            "rank": "soldado.comandante",
+            "rank": "BDISoldier",
             "name": "lider",
             "password": "secret",
             "amount": 2,
-            "asl": "liderPatrulla.asl",
-			"python": "soldado.py"
+            "asl": "liderPatrulla.asl"
         },
-        
+		{
+            "rank": "BDIMedic",
+            "name": "medico",
+            "password": "secret",
+			"amount": 2,
+			"asl": "med.asl"
+        },
+		{
+            "rank": "BDIFieldOp",
+            "name": "fieldop",
+            "password": "secret",
+			"amount": 2,
+			"asl": "fo.asl"
+        },
 		{
             "rank": "soldado.comandante",
             "name": "comandante",
             "password": "secret",
-            "asl": "comandante.asl",
-			"python": "soldado.py"
+            "asl": "comandante.asl"
         },
 		{
-            "rank": "soldados.soldado",
+            "rank": "BDISoldier",
             "name": "defensor",
             "password": "secret",
             "asl": "defensor.asl",
-			"amount": 3,
-			"python": "soldado.py"
+			"amount": 3
         }
     
    ],
    "allied": [
 		{
             "rank": "BDIMedic",
-            "name": "medico",
+            "name": "enemigo",
             "password": "secret"
-			
         }
    ]
   }

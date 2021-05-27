@@ -9,20 +9,26 @@
 /*espera que le asigne su patrulla el comandante*/
 +comandante([C])
 	<-
-	.print("pido mi escuadrón");
+	.print("pido mi escuadron");
 	.send(C,tell,solPatrulla).
 	
 /*El comandante le manda su patrulla*/
-+respPatrulla([L1,L2])[source(G)]
++respPatrulla([L1,L2])[source(C)]
 	<-
 	.print("el comandante me da mi escuadron");
-	.send(L1,tell,sigueme);
+	+crea_puntos;
 	+miFieldops(L1);
-	.send(L2,tell,sigueme);
+	.send(L1,tell,medico(L2));
 	+miMedico(L2);
-	.wait(1000);
-	.send(G,tell,solDestino);
-	+crea_puntos.
+	.send(L2,tell,fieldop(L1));
+	+pedir_seguimiento([L1,L2]).
+	
++pedir_seguimiento([L1,L2])
+	<-
+	?control_points(C);
+	.nth(0,C,Pos);
+	.send(L1,tell,sigueme(Pos));
+	.send(L2,tell,sigueme(Pos)).
 	
 /*Crea puntos de control*/
 +crea_puntos
@@ -33,5 +39,30 @@
 	.length(C,L);
 	+total_control_points(L);
 	+patrulla(0).
+	
++patrulla(P): total_control_points(T) & P<T
+	<-
+	?control_points(C);
+	.nth(P,C,A);
+	.goto(A).
+
++patrulla(P): total_control_points(T) & P==T
+	<-
+	-patrulla(P);
+	+patrulla(0).
+  
++target_reached(T)
+	<-
+	?patrulla(N);
+	.turn(1.57);
+	.wait(200);
+	.turn(1.57);
+	.wait(200);
+	.turn(1.57);
+	.wait(200);
+	.turn(1.57);
+	.wait(200);
+	-+patrulla(N+1);
+	-target_reached(T).
 	
 
