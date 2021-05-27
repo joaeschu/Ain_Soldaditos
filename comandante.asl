@@ -9,13 +9,13 @@
 	.get_service("defensor");
 	.goto(F).
 	
-/*Coge a los 3 defensores y los reparte en torno a la bandera*/
+/*Coge a los 3 defensores y los reparte en torno a la bandera. Luego se mueve a su lugar*/
 +defensor(D)
 	<-
 	?flag(F);
-	.print("Conozco a mis 4 defensores, les digo donde ir");
+	.print("Conozco a mis 3 defensores, les digo donde ir");
 	.pDefensiva(F, Po);
-	while(i(I) & I < 4) {
+	while(i(I) & I < 3) {
     .nth(I,Po, P1);
     .print("Punto ",I, ": ", P1);
 
@@ -24,6 +24,9 @@
     .print("Ahora",Sold," es defensor.");
     -+i(I+1);
 	}
+	-+i(I+1);
+	.nth(I,Po, P1);
+	.goto(P1)
 	.print("fin de asignacion").
 	
 /*Cuando recibe una solicitud de patrulla del lider de escuadrón L, 

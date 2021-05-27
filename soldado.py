@@ -94,3 +94,16 @@ class comandante(BDITroop):
 
         return (pos1, pos2, pos3, pos4)
         
+        @actions.add_function(".banderaCogida", ())
+    def _banderaCogida():
+        
+        #Devuelve 1 si la bandera esta en manos del enemigo        
+        return 1 if self.is_objective_carried else 0    
+    
+    @actions.add_function(".distMedia", (tuple,tuple, ))
+    def _distMedia(p1, p2):
+               
+        #Devuelve la distancia media entre dos puntos
+        return ((p1[0] + p2[0])/2, 0, (p1[2]+ p2[2])/2)
+
+        
