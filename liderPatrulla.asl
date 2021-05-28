@@ -70,3 +70,16 @@
 	-target_reached(T).
 	
 
+/*Si ve a alguien, dispara*/	
++enemies_in_fov(ID,Type,Angle,Distance,Health,Position): 
+	<-
+	.look_at(Position);
+	.shoot(1,Position).
+	
+/*TODO Comprueba si tiene munición o vida bajas y va a reponer*/
++check:ammo(A) & health(H) & not recuperando & position(P) & peligro
+    <-
+    if(H < 40 | A < 20){
+    .print("Reabasteciendo...");
+    	
+

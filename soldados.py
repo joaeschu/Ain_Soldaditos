@@ -24,37 +24,79 @@ class BDIGeneral(BDITroop):
     def add_custom_actions(self, actions):
         super().add_custom_actions(actions)
         
-    #funcion para eliminar un elemento de una lista
-    @actions.add_function(".quitar", (int, tuple))
-    def _quitar(i, l):
-        #si estuviese en medio, se concatenan 2 listas, sin el elemento nº i
-        if (i!=0) and (i!=(len(l)-1)):
-            return tuple(l[0:i] + l[i+1:])
+        #funcion para eliminar un elemento de una lista
+        @actions.add_function(".quitar", (int, tuple))
+        def _quitar(i, l):
+            #si estuviese en medio, se concatenan 2 listas, sin el elemento nº i
+            if (i!=0) and (i!=(len(l)-1)):
+                return tuple(l[0:i] + l[i+1:])
             
-        #si esta al principio, se quita el 1er elemento
-        if i == 0:
-            return l[1:]
+            #si esta al principio, se quita el 1er elemento
+            if i == 0:
+                return l[1:]
             
-        #si esta al final, solo se quita el ultimo
-        elif i == (len(l) - 1):
-            return l[:i]
+            #si esta al final, solo se quita el ultimo
+            elif i == (len(l) - 1):
+                return l[:i]
             
-    #funcion para calcular las posiciones de los defensores
-    @actions.add_function(".calcula", (tuple, tuple))
-    def _calcula(PosBan,lisPos):
-        lista=lisPos
-        i=0
-        lista[0][0]+=0
-        lista[0][2]+=20
-        lista[1][0]+=(-17.3)
-        lista[1][2]+=(-10)
-        lista[2][0]+=(17.3)
-        lista[2][2]+=(-10)       
-        return tuple(lista)
+        @actions.add_function(".distMedia", (tuple,tuple, ))
+        def _distMedia(p1, p2):
+               
+            #Devuelve la distancia media entre dos puntos
+            return ((p1[0] + p2[0])/2, 0, (p1[2]+ p2[2])/2)
 
-    
+        @actions.add_function(".pDefensiva", (tuple))
+        def _pDefensiva(posBan):
+       
+            #Vamos a calcular cuatro posiciones alrededor de la bandera. 
+            #Tienen que estar a una distancia entre ellos que les permita tener un buen rango de visi?n y acudir en ayuda del otro r?pidamente.
+            #Si hay muros y no se puede estar a la distancia idea, esta se reducir?.
+       
+            fX, fY, fZ = posBan
+        
+            #Distancia base entre soldados
+            dist = 25
+        
+            # Posicion arriba a la izquierda
+            i = 0
+            x = fX - dist
+            z = fZ + dist
+            while not self.map.can_walk(x,z):
+                x = fX - dist + i
+                z = fZ + dist - i
+                i += 1
+            pos1 = (x, 0, z)    
+
+            i = 0
+            # Posicion arriba a la derecha
+            x = fX + dist
+            z = fZ + dist
+            while not self.map.can_walk(x,z):
+                x = fX + dist - i
+                z = fZ + dist - i
+                i += 1
+            pos2 = (x, 0, z) 
+
+            i = 0
+            # Posicion abajo a la izquierda
+            x = fX - dist
+            z = fZ - dist
+            while not self.map.can_walk(x,z):
+                x = fX - dist + i
+                z = fZ - dist + i
+                i += 1
+            pos4 = (x, 0, z) 
+
+            i = 0
+            # Posicion abajo a la derecha
+            x = fX + dist
+            z = fZ - dist
+            while not self.map.can_walk(x,z):
+                x = fX + dist - i
+                z = fZ - dist + i
+                i += 1
+            pos3 = (x, 0, z) 
+
+            return (pos1, pos2, pos3, pos4)    
 
 
-class SoldadoPropio(BDISoldier):
-    def add_custom_actions(self, actions):
-        super().add_custom_actions(actions)
