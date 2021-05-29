@@ -13,14 +13,14 @@
             "asl": "liderPatrulla.asl"
         },
 		{
-            "rank": "BDIMedic",
+            "rank": "soldado.medico",
             "name": "medico",
             "password": "secret",
 			"amount": 2,
 			"asl": "med.asl"
         },
 		{
-            "rank": "BDIFieldOp",
+            "rank": "soldado.fieldop",
             "name": "fieldop",
             "password": "secret",
 			"amount": 2,
@@ -33,7 +33,7 @@
             "asl": "comandante.asl"
         },
 		{
-            "rank": "BDISoldier",
+            "rank": "soldado.comandante",
             "name": "defensor",
             "password": "secret",
             "asl": "defensor.asl",
@@ -45,7 +45,9 @@
 		{
             "rank": "BDIMedic",
             "name": "enemigo",
-            "password": "secret"
+            "password": "secret",
+			"asl": "enemigoPrueba.asl",
+			"amount": 5
         }
    ]
   }

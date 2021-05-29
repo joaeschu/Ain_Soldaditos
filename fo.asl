@@ -9,63 +9,63 @@
 	<-
 	.goto(Pos).
 	
-+medico(M)[source(L)]
++escuadron([L1,L2,L3])[source(L)]
 	<-
-	+miMedico(M).
+	+miSoldado(L3);
+	+miMedico(L2);
+	+miLider(L).
 	
-+target_reached(T)
++target_reached(T): not base
 	<-
 	.turn(1.57);
-	.wait(50);
+	.wait(200);
 	.turn(1.57);
-	.wait(50);
+	.wait(200);
 	.turn(1.57);
-	.wait(50);
+	.wait(200);
 	.turn(1.57);
-	.wait(50);
+	.wait(200);
 	.reload;
 	-target_reached(T).
 
-
-/*Se dedica a colocar paquetes de municion en la base si hay peligro*/	
-+curar: peligro
-	<-
-    ?flag(F);
-	.pDefensiva(F, Po);
-	.nth(0,Po,P1);
-	._distMedia(P1,F,D1);
-	.goto(D1);
-	.reload;
-    .print("Paquete de municion dejado en" D1);
-	
-	.nth(1,Po,P2);
-	._distMedia(P2,F,D2);
-	.goto(D2);
-	.reload;
-    .print("Paquete de municion dejado en" D2);
-	
-	.nth(2,Po,P3);
-	._distMedia(P3,F,D3);
-	.goto(D3);
-	.reload;
-    .print("Paquete de municion dejado en" D3);
-	
-	.nth(3,Po,P4);
-	._distMedia(P4,F,D4);
-	.goto(D4);
-	.reload;
-    .print("Paquete de municion dejado en" D4);
-	
 /*Si ve a alguien, dispara*/	
-+enemies_in_fov(ID,Type,Angle,Distance,Health,Position): 
++enemies_in_fov(ID,Type,Angle,Distance,Health,Position)
 	<-
 	.look_at(Position);
 	.shoot(1,Position).
 	
 /*TODO Comprueba si tiene munición o vida bajas y va a reponer*/
-+check:ammo(A) & health(H) & not recuperando & position(P) & peligro
++check:ammo(A) & health(H) & not recuperando & position(P) & peligro & (H < 40 | A < 20)
     <-
-    if(H < 40 | A < 20){
-    .print("Reabasteciendo...");
+    .print("Reabasteciendo...").
+	
+/*Si le llega el mensaje bandera, pasa a formar parte del equipo de la bandera*/
++bandera[source(C)]
+	<-
+	+base;
+	?flag(F);
+	.pDefensiva(F, 24, P);
+	+control_points(P);
+	+total_control_points(4);
+	+patrulla(0).
+
++patrulla(P): total_control_points(T) & P<T
+	<-
+	?control_points(C);
+	.nth(P,C,A);
+	.goto(A).
+
++patrulla(P): total_control_points(T) & P==T
+	<-
+	-patrulla(P);
+	+patrulla(0).
+  
++target_reached(T): base
+	<-
+	?patrulla(N);
+	.wait(100);
+	.reload;
+	-+patrulla(N+1);
+	-target_reached(T).
 
 

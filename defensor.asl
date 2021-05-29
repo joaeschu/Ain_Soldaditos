@@ -4,29 +4,44 @@
 	<-
 	.register_service("defensor");
 	.wait(500);
-	.get_service("comandante");
-	.get_service("lider_patrulla").
+	.get_service("comandante").
 
-+lider_patrulla(L)
++es_lider(L)[sourde(C)]
 	<-
-	+lideres(L).
+	+lider(L).
 
 +posicion_defensa(Pos)[source(C)]
 	<-
 	.print("Tengo que ir a: ", Pos);
+	+posicion_defender(Pos);
 	.goto(Pos).
+	
++pos_reponer(Pos)[source(C)]
+	<-
+	+posicion_reponer(Pos).
+
++target_reached(T)
+	<-
+	!!vigilar.
 
 /*Busca enemigos cual peonza*/	
-+vigilar: position([X,Y,Z])
++!vigilar: position([X,Y,Z]) & peligro & not(enemies_in_fov(ID,Type,Angle,Distance,Health,Position))
+    <-
+    -peligro;
+	!!check;
+	!!vigilar.
+	
++!vigilar: position([X,Y,Z]) & peligro
+    <-
+	!!vigilar.
+	
++!vigilar: position([X,Y,Z]) & not peligro
     <-
     .look_at([X+1,Y,Z]);
-	.wait(400);
 	.look_at([X-1,Y,Z]);
-	.wait(400);
 	.look_at([X,Y,Z+1]);
-	.wait(400);
 	.look_at([X,Y,Z-1]);
-	.wait(400).
+	!!vigilar.
 	
 
 /*Si ve a alguien mientras vigila, dispara, avisa y entra en modo peligro*/
@@ -34,7 +49,7 @@
 	<-
 	+peligro;
 	?position(Pos);
-	?lideres(L);
+	?lider(L);
 	.send(L,tell,peligro_en(Position));
 	.send(L,tell,venid(Pos));
 	.look_at(Position);
@@ -47,14 +62,16 @@
 	.shoot(1,Position).
 	
 /*Comprueba si tiene munición o vida bajas y va a reponer*/
-+check:ammo(A) & health(H) & not recuperando & position(P) & peligro
++!check:ammo(A) & health(H) & (H < 60 | A < 60)
     <-
-    if(H < 40 | A < 20){
     .print("Reabasteciendo...");
-    ?flag(F);
-	.distMedia(P,F,M);
-    .goto(M);
-	.print("Volviendo al combate");
+    ?posicion_reponer(P);
+    .goto(P);
+	!!check.
+	
++!check:ammo(A) & health(H) & (H >= 70 & A >= 50)
+	<-
+	?posicion_defender(P);
 	.goto(P).
 	
     

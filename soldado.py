@@ -20,7 +20,7 @@ from pygomas.ontology import HEALTH
 from pygomas.agent import LONG_RECEIVE_WAIT
 
 
-class comandante(BDITroop):
+class comandante(BDISoldier):
     def add_custom_actions(self, actions):
         super().add_custom_actions(actions)
         
@@ -40,17 +40,14 @@ class comandante(BDITroop):
                 return l[:i]
             
         #funcion para calcular las posiciones de los defensores
-        @actions.add_function(".pDefensiva", (tuple))
-        def _pDefensiva(posBan):
+        @actions.add_function(".pDefensiva", (tuple,int))
+        def _pDefensiva(posBan,dist):
        
             #Vamos a calcular cuatro posiciones alrededor de la bandera. 
             #Tienen que estar a una distancia entre ellos que les permita tener un buen rango de visi?n y acudir en ayuda del otro r?pidamente.
             #Si hay muros y no se puede estar a la distancia idea, esta se reducir?.
        
             fX, fY, fZ = posBan
-        
-            #Distancia base entre soldados
-            dist = 25
         
             # Posicion arriba a la izquierda
             i = 0
@@ -100,10 +97,132 @@ class comandante(BDITroop):
             #Devuelve 1 si la bandera esta en manos del enemigo        
             return 1 if self.is_objective_carried else 0    
     
-        @actions.add_function(".distMedia", (tuple,tuple, ))
+        @actions.add_function(".distMedia", (tuple,tuple))
         def _distMedia(p1, p2):
                
             #Devuelve la distancia media entre dos puntos
             return ((p1[0] + p2[0])/2, 0, (p1[2]+ p2[2])/2)
 
+class medico(BDIMedic):
+    def add_custom_actions(self, actions):
+        super().add_custom_actions(actions)
+         
+        #funcion para calcular las posiciones de los defensores
+        @actions.add_function(".pDefensiva", (tuple,int))
+        def _pDefensiva(posBan,dist):
+       
+            #Vamos a calcular cuatro posiciones alrededor de la bandera. 
+            #Tienen que estar a una distancia entre ellos que les permita tener un buen rango de visi?n y acudir en ayuda del otro r?pidamente.
+            #Si hay muros y no se puede estar a la distancia idea, esta se reducir?.
+       
+            fX, fY, fZ = posBan
         
+            # Posicion arriba a la izquierda
+            i = 0
+            x = fX - dist
+            z = fZ + dist
+            while not self.map.can_walk(x,z):
+                x = fX - dist + i
+                z = fZ + dist - i
+                i += 1
+            pos1 = (x, 0, z)    
+
+            i = 0
+            # Posicion arriba a la derecha
+            x = fX + dist
+            z = fZ + dist
+            while not self.map.can_walk(x,z):
+                x = fX + dist - i
+                z = fZ + dist - i
+                i += 1
+            pos2 = (x, 0, z) 
+
+            i = 0
+            # Posicion abajo a la izquierda
+            x = fX - dist
+            z = fZ - dist
+            while not self.map.can_walk(x,z):
+                x = fX - dist + i
+                z = fZ - dist + i
+                i += 1
+            pos4 = (x, 0, z) 
+
+            i = 0
+            # Posicion abajo a la derecha
+            x = fX + dist
+            z = fZ - dist
+            while not self.map.can_walk(x,z):
+                x = fX + dist - i
+                z = fZ - dist + i
+                i += 1
+            pos3 = (x, 0, z) 
+
+            return (pos1, pos2, pos3, pos4)
+        
+        @actions.add_function(".distMedia", (tuple,tuple))
+        def _distMedia(p1, p2):
+               
+            #Devuelve la distancia media entre dos puntos
+            return ((p1[0] + p2[0])/2, 0, (p1[2]+ p2[2])/2)
+
+class fieldop(BDIFieldOp):
+    def add_custom_actions(self, actions):
+        super().add_custom_actions(actions)
+         
+        #funcion para calcular las posiciones de los defensores
+        @actions.add_function(".pDefensiva", (tuple,int))
+        def _pDefensiva(posBan,dist):
+       
+            #Vamos a calcular cuatro posiciones alrededor de la bandera. 
+            #Tienen que estar a una distancia entre ellos que les permita tener un buen rango de visi?n y acudir en ayuda del otro r?pidamente.
+            #Si hay muros y no se puede estar a la distancia idea, esta se reducir?.
+       
+            fX, fY, fZ = posBan
+        
+            # Posicion arriba a la izquierda
+            i = 0
+            x = fX - dist
+            z = fZ + dist
+            while not self.map.can_walk(x,z):
+                x = fX - dist + i
+                z = fZ + dist - i
+                i += 1
+            pos1 = (x, 0, z)    
+
+            i = 0
+            # Posicion arriba a la derecha
+            x = fX + dist
+            z = fZ + dist
+            while not self.map.can_walk(x,z):
+                x = fX + dist - i
+                z = fZ + dist - i
+                i += 1
+            pos2 = (x, 0, z) 
+
+            i = 0
+            # Posicion abajo a la izquierda
+            x = fX - dist
+            z = fZ - dist
+            while not self.map.can_walk(x,z):
+                x = fX - dist + i
+                z = fZ - dist + i
+                i += 1
+            pos4 = (x, 0, z) 
+
+            i = 0
+            # Posicion abajo a la derecha
+            x = fX + dist
+            z = fZ - dist
+            while not self.map.can_walk(x,z):
+                x = fX + dist - i
+                z = fZ - dist + i
+                i += 1
+            pos3 = (x, 0, z) 
+
+            return (pos1, pos2, pos3, pos4)
+        
+        @actions.add_function(".distMedia", (tuple,tuple))
+        def _distMedia(p1, p2):
+               
+            #Devuelve la distancia media entre dos puntos
+            return ((p1[0] + p2[0])/2, 0, (p1[2]+ p2[2])/2)         
