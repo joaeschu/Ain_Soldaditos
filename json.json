@@ -46,7 +46,6 @@
             "rank": "BDIMedic",
             "name": "enemigo",
             "password": "secret",
-			"asl": "enemigoPrueba.asl",
 			"amount": 5
         }
    ]

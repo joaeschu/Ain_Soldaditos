@@ -50,7 +50,7 @@
 	-patrulla(P);
 	+patrulla(0).
   
-+target_reached(T): patrulla(N)
++target_reached(T): patrulla(N) & not reponiendo
 	<-
 	.turn(1.57);
 	.turn(1.57);
@@ -65,11 +65,20 @@
 	.look_at(Position);
 	.shoot(1,Position).
 	
-/*TODO Comprueba si tiene munición o vida bajas y va a reponer*/
-+check:ammo(A) & health(H) & not recuperando & position(P) & peligro & (H < 40 | A < 20)
-    <-
-    .print("Reabasteciendo...").
++peligro_en(Position)[source(D)]
+	<-
+	?miFieldops(L1);
+	?miMedico(L2);
+	?miSoldado(L3);
+	+miFieldops(L1);
+	+miMedico(L2);
+	+miSoldado(L3);
+	.send([L1,L2,L3],tell,sigueme(Pos));
+	.goto(Position).
     	
++todo_bien[source(D)]
+	<-
+	+crea_puntos.
 		
 /* Si le llega el mensaje "escuadron", quiere decir que es el soldado del equipo explorador*/
 +escuadron([L1,L2,L3])[source(L)]
@@ -80,10 +89,12 @@
 	
 +sigueme(Pos)[source(L)]
 	<-
+	.wait(500);
 	.goto(Pos).
 	
 +target_reached(T): not(patrulla(P))
 	<-
+	+check;
 	.turn(1.57);
 	.wait(200);
 	.turn(1.57);
@@ -93,5 +104,24 @@
 	.turn(1.57);
 	.wait(200);
 	-target_reached(T).
+	
++check:ammo(A) & health(H) & (H < 60 | A < 60)
+    <-
+    +reponiendo;
+	-check.
+	
++check:ammo(A) & health(H) & (H >= 70 & A >= 50)
+	<-
+	+patrulla(0);
+	-check.
+	
++reponiendo	
+	<-
+	?position(P);
+	?miFieldops(F);
+	?miMedico(M);
+	.send([F,M],tell,sigueme(P));
+	-reponiendo;
+	+check.
 
 

@@ -4,21 +4,19 @@
 	<-
 	.register_service("defensor");
 	.wait(500);
-	.get_service("comandante").
+	.get_service("comandante");
+	.get_service("lider_patrulla").
 
-+es_lider(L)[sourde(C)]
++lider_patrulla(L)
 	<-
-	+lider(L).
+	.nth(0,L,L1);
+	+lider(L1).
 
 +posicion_defensa(Pos)[source(C)]
 	<-
 	.print("Tengo que ir a: ", Pos);
 	+posicion_defender(Pos);
 	.goto(Pos).
-	
-+pos_reponer(Pos)[source(C)]
-	<-
-	+posicion_reponer(Pos).
 
 +target_reached(T)
 	<-
@@ -28,6 +26,8 @@
 +!vigilar: position([X,Y,Z]) & peligro & not(enemies_in_fov(ID,Type,Angle,Distance,Health,Position))
     <-
     -peligro;
+	?lider(L);
+	.send(L,tell,todo_bien);
 	!!check;
 	!!vigilar.
 	
@@ -51,7 +51,6 @@
 	?position(Pos);
 	?lider(L);
 	.send(L,tell,peligro_en(Position));
-	.send(L,tell,venid(Pos));
 	.look_at(Position);
 	.shoot(1,Position).
 	
@@ -65,14 +64,22 @@
 +!check:ammo(A) & health(H) & (H < 60 | A < 60)
     <-
     .print("Reabasteciendo...");
-    ?posicion_reponer(P);
-    .goto(P);
+    !!reponer;
 	!!check.
 	
 +!check:ammo(A) & health(H) & (H >= 70 & A >= 50)
 	<-
 	?posicion_defender(P);
 	.goto(P).
+
++!reponer: packs_in_fov(ID,Type,Angle,Distance,Health,Position) & Type<1003
+	<-	
+	.goto(Position).
+	
++!reponer: not (packs_in_fov(ID,Type,Angle,Distance,Health,Position))
+	<-	
+	.turn(1.57);
+	!!reponer.
 	
     
 

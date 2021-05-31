@@ -7,6 +7,7 @@
 
 +sigueme(Pos)[source(L)]
 	<-
+	.wait(500);
 	.goto(Pos).
 	
 +escuadron([L1,L2,L3])[source(L)]
@@ -63,7 +64,6 @@
 +target_reached(T): base
 	<-
 	?patrulla(N);
-	.wait(100);
 	.cure;
 	-+patrulla(N+1);
 	-target_reached(T).
