@@ -41,12 +41,5 @@
         }
     
    ],
-   "allied": [
-		{
-            "rank": "BDIMedic",
-            "name": "enemigo",
-            "password": "secret",
-			"amount": 5
-        }
-   ]
+   
   }
