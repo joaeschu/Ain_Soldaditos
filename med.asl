@@ -35,10 +35,22 @@
 	.look_at(Position);
 	.shoot(1,Position).
 	
-/*TODO Comprueba si tiene munición o vida bajas y va a reponer*/
-+check:ammo(A) & health(H) & not recuperando & position(P) & peligro & (H < 40 | A < 20)
+/*Comprueba si tiene munición o vida bajas y va a reponer*/
++!check:ammo(A) & health(H) & (H < 60 | A < 60)
     <-
-    .print("Reabasteciendo...").
+    .print("Reabasteciendo...");
+	.cure;
+    !!reponer;
+	!!check.
+
++!reponer: packs_in_fov(ID,Type,Angle,Distance,Health,Position) & Type<1003
+	<-	
+	.goto(Position).
+	
++!reponer: not (packs_in_fov(ID,Type,Angle,Distance,Health,Position))
+	<-	
+	.turn(1.57);
+	!!reponer.
 	
 /*Si le llega el mensaje bandera, pasa a formar parte del equipo de la bandera*/
 +bandera[source(C)]

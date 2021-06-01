@@ -22,9 +22,10 @@
 	<-
 	!!vigilar.
 
-/*Busca enemigos cual peonza*/	
+/*Si no ve enemigos, espera un segundo, quita el modo peligro y manda un mensaje de todo bien*/	
 +!vigilar: position([X,Y,Z]) & peligro & not(enemies_in_fov(ID,Type,Angle,Distance,Health,Position))
     <-
+	.wait(1000);
     -peligro;
 	?lider(L);
 	.send(L,tell,todo_bien);
